@@ -9,9 +9,11 @@ public class SchemaTestDbContext(DbContextOptions<SchemaTestDbContext> options) 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("schematest");
+
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.ToTable("customers", "schematest");
+            entity.ToTable("customers");
 
             entity.HasKey(e => e.Id);
 
@@ -31,5 +33,31 @@ public class SchemaTestDbContext(DbContextOptions<SchemaTestDbContext> options) 
                 .HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
                 .ValueGeneratedOnAdd();
         });
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var currentSchema = entityType.GetSchema();
+            var tableName = entityType.GetTableName();
+
+            if (string.IsNullOrEmpty(tableName))
+            {
+                continue;
+            }
+
+            // Skip tables that already have your convention applied
+            if (!tableName.StartsWith("schematest_", StringComparison.OrdinalIgnoreCase))
+            {
+                entityType.SetTableName($"schematest_{tableName}");
+            }
+
+            // Optional: keep schema metadata if you still want it inside EF
+            if (!string.IsNullOrEmpty(currentSchema))
+            {
+                entityType.SetSchema(currentSchema);
+            }
+        }
+
+        base.OnModelCreating(modelBuilder);
     }
+
 }

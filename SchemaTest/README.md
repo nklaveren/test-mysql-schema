@@ -21,7 +21,11 @@ cd SchemaTest
 dotnet run --project SchemaTest.AppHost
 ```
 
-Once the application is ready, the Aspire dashboard prints the public URL for the API (typically `http://localhost:8080`). Import the OpenAPI document at `/openapi/v1.json` into your preferred client.
+### Visualizando o OpenAPI / Endpoints
+
+- Explore os endpoints em tempo real abrindo o link `/openapi` no navegador (ex.: `http://localhost:8080/openapi`).
+- A interface tradicional do Swagger UI está disponível em `http://localhost:8080/swagger`.
+- Para obter o documento bruto (JSON), utilize `http://localhost:8080/openapi/v1.json`.
 
 ### Sample requests
 

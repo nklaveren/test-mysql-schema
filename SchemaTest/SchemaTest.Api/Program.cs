@@ -10,11 +10,12 @@ builder.AddServiceDefaults();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SchemaTestDbContext>((serviceProvider, options) =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    var connectionString = configuration.GetConnectionString("schematest")
+    var connectionString = configuration.GetConnectionString("schemadb")
         ?? throw new InvalidOperationException("A connection string named 'schematest' was not provided by Aspire.");
 
     var serverVersion = MySqlServerVersion.LatestSupportedServerVersion;
@@ -32,6 +33,13 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "SchemaTest v1");
+        options.DocumentTitle = "SchemaTest API";
+    });
+
     app.MapOpenApi();
 }
 
@@ -47,7 +55,6 @@ app.MapPost("/customers", async (SchemaTestDbContext context, Customer customer,
     {
         context.Customers.Add(customer);
         await context.SaveChangesAsync(cancellationToken);
-
         return Results.Created($"/customers/{customer.Id}", customer);
     })
     .WithName("CreateCustomer")

@@ -20,3 +20,11 @@ dotnet run --project SchemaTest.AppHost
 > Requer .NET SDK 9 preview instalado e um runtime de containers ativo (ex.: Docker Desktop).
 
 Para detalhes específicos da POC, consulte [`SchemaTest/README.md`](SchemaTest/README.md) e o [relatório de compatibilidade](SchemaTest/relatorio.md).
+
+## Visão rápida
+
+![Recursos provisionados pelo Aspire](images/aspire-recursos.png)
+
+![Configuração de connection string](images/config-cn.png)
+
+![Configuração de schema/prefixo](images/config-schema.png)
