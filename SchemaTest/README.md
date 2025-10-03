@@ -39,16 +39,3 @@ Invoke-RestMethod -Uri 'http://localhost:8080/customers' -Method Post -Body (@{ 
 # check connectivity against MySQL
 Invoke-RestMethod -Uri 'http://localhost:8080/db-check'
 ```
-
-The minimal hosted service seeds a couple of sample customers on first run so you can immediately validate persistence.
-
-## Database schema
-
-A single `customers` table is created automatically via `EnsureCreated`:
-
-- `Id` (INT, identity)
-- `Name` (nvarchar 120)
-- `Email` (nvarchar 160)
-- `CreatedAt` (timestamp, defaults to current UTC value)
-
-Feel free to add EF Core migrations as you evolve the schema; this POC keeps things lightweight by seeding data programmatically.
