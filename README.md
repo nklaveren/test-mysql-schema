@@ -19,4 +19,4 @@ dotnet run --project SchemaTest.AppHost
 
 > Requer .NET SDK 9 preview instalado e um runtime de containers ativo (ex.: Docker Desktop).
 
-Para detalhes específicos da POC, consulte `SchemaTest/README.md` e `SchemaTest/relatorio.md`.
+Para detalhes específicos da POC, consulte [`SchemaTest/README.md`](SchemaTest/README.md) e o [relatório de compatibilidade](SchemaTest/relatorio.md).
